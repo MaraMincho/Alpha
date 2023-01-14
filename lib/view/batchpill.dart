@@ -74,6 +74,10 @@ class BatchPills extends StatelessWidget {
                     ],
                   ),
 
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 15, 30, 15),
+                    child: Text('자세히 보기'),
+                  )
 
                 ],
               ),

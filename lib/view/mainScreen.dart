@@ -1,4 +1,5 @@
 import 'package:alpha/view/batchpill.dart';
+import 'package:alpha/view/datailpillbatch.dart';
 import 'package:alpha/view/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -23,7 +24,11 @@ class _MainScreenState extends State<MainScreen> {
           padding: EdgeInsets.fromLTRB(25, 45, 25, 0),
           child: Column(
             children: [
-              ProfileViewer(),
+              GestureDetector(
+                onTap: (){
+                  Get.to(DetailBatchPill());
+                },
+                  child: ProfileViewer()),
               SizedBox(height: 65,),
               Expanded(
                 child: ListView(
