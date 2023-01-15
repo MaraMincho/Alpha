@@ -1,4 +1,3 @@
-import 'package:alpha/view/batchpill.dart';
 import 'package:alpha/view/detailpill.dart';
 import 'package:alpha/view/webview.dart';
 import 'package:flutter/material.dart';
@@ -29,17 +28,20 @@ class DetailBatchPill extends StatelessWidget {
               SizedBox(height: 30,),
               Align(alignment: Alignment.topLeft,child: Text('아침식사 이전',style: TextStyle(fontSize: 25, letterSpacing: -1),)),
 
-
               Expanded(
                   child: ListView(
                     children: [
+
                       GestureDetector(
                           child: DetailPill(),
                         onTap: (){
                             Get.to(WebViewScreen());
                         },
                       ),
-                      DetailPill(),
+                      GestureDetector(
+                          child: DetailPill(),
+                        onTap: (){Get.to(WebViewScreen());}
+                      ),
                       DetailPill(),
                       DetailPill(),
                     ],

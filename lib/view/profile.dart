@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ProfileViewer extends StatelessWidget {
   const ProfileViewer({Key? key}) : super(key: key);
@@ -11,8 +10,6 @@ class ProfileViewer extends StatelessWidget {
         .of(context)
         .size;
     final LargeSizeFont = (size.width / 7);
-    final MediumSizeFont = (size.width / 15);
-    final SmallSizeFont = (size.width / 20);
     return
       Column( // 반응형 상태관리 - 1
         crossAxisAlignment: CrossAxisAlignment.start,

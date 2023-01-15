@@ -23,12 +23,12 @@ class MyApp extends StatelessWidget {
       //   body: Center(
       //     child: Column(
       //       children: [
-      //         Image.asset('images/imgs/img.png'),
+      //         Image.asset('images/imgs/BadNoText.png'),
       //         Text('안녕하세요 헬로 월드 '),
       //         Text('안녕하세요 헬로 월드', style: TextStyle(
       //           fontWeight: FontWeight.w700
       //         ),),
-      //         Image.asset('images/icons/img.png')
+      //         Image.asset('images/icons/BadNoText.png')
       //       ],
       //     ),
       //   ),

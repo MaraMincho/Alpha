@@ -1,3 +1,4 @@
+import 'package:alpha/view/PillRecognation.dart';
 import 'package:alpha/view/batchpill.dart';
 import 'package:alpha/view/datailpillbatch.dart';
 import 'package:alpha/view/profile.dart';
@@ -17,7 +18,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool loading = false;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -35,7 +35,12 @@ class _MainScreenState extends State<MainScreen> {
                   scrollDirection: Axis.vertical,
                   children: [
                     Text('오늘 먹을 알약', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),),
-                    BatchPills(),
+                    GestureDetector(
+                      child: BatchPills(),
+                      onTap: () {
+                        Get.to(PillRecognation());
+                      }
+                    ),
                     BatchPills(),
                     BatchPills(),
                   ],
