@@ -1,5 +1,7 @@
-import 'package:alpha/view/HomeScreen.dart';
-import 'package:alpha/view/PillRecognationScreen.dart';
+import 'package:alpha/view/PillRecognation.dart';
+import 'package:alpha/view/batchpill.dart';
+import 'package:alpha/view/datailpillbatch.dart';
+import 'package:alpha/view/profile.dart';
 import 'package:flutter/material.dart';
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -15,28 +17,36 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    void _onItemTapped(int index) {
-      setState(() {
-        _currentScreenIndex = index;
-        print(_currentScreenIndex);
-      });
-    }
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: '홈',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.camera_alt_rounded),
-                label: '알약 인식',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.local_pharmacy_rounded),
-                label: '약국 어디',
-              ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(25, 45, 25, 0),
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: (){
+                  Get.to(DetailBatchPill());
+                },
+                  child: ProfileViewer()),
+              SizedBox(height: 65,),
+              Expanded(
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Text('오늘 먹을 알약', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),),
+                    GestureDetector(
+                      child: BatchPills(),
+                      onTap: () {
+                        Get.to(PillRecognation());
+                      }
+                    ),
+                    BatchPills(),
+                    BatchPills(),
+                  ],
+                ),
+              ).animate(
+                delay: 400.ms, // this delay only happens once at the very start
+              ).fadeIn(delay: 500.ms)
             ],
           currentIndex: _currentScreenIndex,
           onTap: _onItemTapped,

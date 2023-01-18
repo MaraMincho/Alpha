@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:webview_flutter/webview_flutter.dart';
 
-var controller = WebViewController()
+var controller = new WebViewController()
   ..setJavaScriptMode(JavaScriptMode.unrestricted)
   ..setBackgroundColor(const Color(0x00000000))
   ..setNavigationDelegate(
@@ -20,5 +20,6 @@ var controller = WebViewController()
         return NavigationDecision.navigate;
       },
     ),
+
   )
-  ..loadRequest(Uri.parse('https://nedrug.mfds.go.kr/pbp/CCBBB01/getItemDetail?itemSeq=198901915'));
+  ..loadRequest(Uri.parse('https://nedrug.mfds.go.kr/pbp/CCBBB01/getItemDetail?itemSeq=198300343'));

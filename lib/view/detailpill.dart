@@ -32,7 +32,7 @@ class DetailPill extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20), // Image border
                         child: SizedBox.fromSize(
                           size: Size.fromRadius(48), // Image radius
-                          child: Image.asset('images/icons/img.png', fit: BoxFit.cover,),
+                          child: Image.asset('images/icons/BadNoText.png', fit: BoxFit.cover,),
                         ),
                       ),
                     )
