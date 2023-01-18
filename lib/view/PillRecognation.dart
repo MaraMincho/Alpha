@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PillRecognation extends StatefulWidget {
   const PillRecognation({Key? key}) : super(key: key);
@@ -11,101 +12,146 @@ class PillRecognation extends StatefulWidget {
 class _PillRecognationState extends State<PillRecognation> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(25, 60, 25, 0),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("알약을 찍어주세요!",
-                      style: TextStyle(fontSize: 35, fontWeight: FontWeight.w700, letterSpacing: -1)),
-                  SizedBox(height: 5,),
-                  Text("다음의 것들을 주의해야 합니다!",
-                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, letterSpacing: -1.5, color: Colors.red)),
-                  SizedBox(height: 10,),
-                  GoodAndBadImageDescription(
-                      titleText: '배경 이미지를 안보이게 찍어주세요',
-                      goodImageDescription: '잘찍었음',
-                      badImageDescription: '못 찍었음',
-                      goodImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/idealNoText.png',
-                      badImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/BadNoText.png'),
-                  GoodAndBadImageDescription(
-                      titleText: '배경 이미지를 안보이게 찍어주세요',
-                      goodImageDescription: '잘찍었음',
-                      badImageDescription: '못 찍었음',
-                      goodImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/idealNoZoom.png',
-                      badImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/BadNoZoom.png'),
-
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width* 0.7,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                      ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Icon( // <-- Icon
-                                Icons.folder,
-                                size: 45.0,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(
-                              ),
-                            ),
-                            Expanded(
-                              flex: 8,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                    child: Text('앨범에서 가져오기', style: TextStyle(fontSize: 23, letterSpacing: -1),))), // <-- Text
-                          ],
-                        )),
+    return SafeArea(
+      child: CustomScrollView(
+        scrollDirection: Axis.vertical,
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            floating: false,
+            pinned: true,
+            snap: false,
+            expandedHeight: MediaQuery.of(context).size.height * 0.25,
+            flexibleSpace: FlexibleSpaceBar(
+                expandedTitleScale: 2,
+                title: Container(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    child: Center(
+                      child: Text("알약을 찍어주세요!", style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: -1, color: Colors.black)),
+                    )
+                )
+            ),
+            shadowColor: Colors.red.withOpacity(0),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(0),
+              child: Container(
+                color: Colors.white,
+                child: const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Center(
+                    child: Text("다음의 것들을 주의해야 합니다!",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -1.5,)
+                    ),
                   ),
-                  SizedBox(height: 15,),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width* 0.7,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Icon( // <-- Icon
-                                Icons.camera_alt,
-                                size: 45.0,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(
-                              ),
-                            ),
-                            Expanded(
-                                flex: 8,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                    child: Text('카메라로 찍기', style: TextStyle(fontSize: 23, letterSpacing: -1),))), // <-- Text
-                          ],
-                        )),
-                  ),
-                ]
-
+                ),
+              ),
             ),
           ),
-        ),
+          SliverList(
+              delegate: SliverChildListDelegate([
+                SizedBox(height: 35,),
+                GoodAndBadImageDescription(
+                    titleText: '배경 이미지를 안보이게 찍어주세요',
+                    goodImageDescription: '잘찍었음',
+                    badImageDescription: '못 찍었음',
+                    goodImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/idealNoText.png',
+                    badImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/BadNoText.png'),
+                GoodAndBadImageDescription(
+                    titleText: '배경 이미지를 안보이게 찍어주세요',
+                    goodImageDescription: '잘찍었음',
+                    badImageDescription: '못 찍었음',
+                    goodImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/idealNoZoom.png',
+                    badImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/BadNoZoom.png'),
+                GoodAndBadImageDescription(
+                    titleText: '배경 이미지를 안보이게 찍어주세요',
+                    goodImageDescription: '잘찍었음',
+                    badImageDescription: '못 찍었음',
+                    goodImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/idealNoZoom.png',
+                    badImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/BadNoZoom.png'),
+
+
+
+                Container(
+                  padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        side: BorderSide(
+                          color: Colors.black.withOpacity(0.2),
+                          width: 1,
+                        ),
+                        shadowColor: Colors.black.withOpacity(0.4),
+                        padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black
+                    ),
+                    onPressed: ()async{
+                      final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                      print(image?.path);
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: SizedBox(
+                              child: Icon(Icons.folder_copy, size: MediaQuery.of(context).size.width * 0.1,)),
+                        ),
+                        Expanded(
+                          flex: 10,
+                          child: Container(
+                              alignment: Alignment.center,
+                              child: Text('앨범에서 가져오기', style: TextStyle(fontSize: 15, letterSpacing: -1),)),
+                        )
+
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          side: BorderSide(
+                            color: Colors.black.withOpacity(0.2),
+                            width: 1,
+                          ),
+                          shadowColor: Colors.black.withOpacity(0.4),
+                          padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black
+                      ),
+                      onPressed: ()async{
+                        final XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+                        print(image?.path);
+
+                      },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: SizedBox(
+                                child: Icon(Icons.camera_alt_rounded, size: MediaQuery.of(context).size.width * 0.1,)),
+                          ),
+                          Expanded(
+                            flex: 10,
+                            child: Container(
+                                alignment: Alignment.center,
+                                child: Text('카메라로 찍기', style: TextStyle(fontSize: 15, letterSpacing: -1),)),
+                          )
+                        ],
+                      ),
+                    )
+                ),
+                SizedBox(height: 30,),
+              ],
+
+              )
+          ),
+        ],
       ),
     );
   }

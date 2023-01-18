@@ -16,35 +16,48 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Align(
-        alignment: Alignment.center,
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.85,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 45,),
-              GestureDetector(
+      child: CustomScrollView(
+        scrollDirection: Axis.vertical,
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            floating: false,
+            pinned: true,
+            snap: false,
+            shadowColor: Colors.white.withOpacity(0),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(150),
+              child: GestureDetector(
                   onTap: (){
                     Get.to(DetailBatchPill());
                   },
-                  child: ProfileViewer()),
-              SizedBox(height: 65,),
-              Expanded(
-                child: ListView(
-                  children: [
-                    Text('오늘 먹을 알약', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),),
-                    BatchPills(),
-                    BatchPills(),
-                    BatchPills(),
-                  ],
-                ).animate(
-                  delay: 400.ms, // this delay only happens once at the very start
-                ).fadeIn(delay: 500.ms),
-              )
-            ],
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+                    child: ProfileViewer(),
+                  )),
+            ),
           ),
-        ),
+          SliverList(
+          delegate: SliverChildListDelegate([
+            SizedBox(height: 30,),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+              child: Text('오늘 먹을 알약', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+              child: Column(
+                children: [
+                  BatchPills(),
+                  BatchPills(),
+                  BatchPills(),
+                ],
+              ),
+            ),
+          ])
+          ),
+        ],
       ),
     );
   }
