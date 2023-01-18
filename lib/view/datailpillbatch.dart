@@ -1,4 +1,3 @@
-import 'package:alpha/view/batchpill.dart';
 import 'package:alpha/view/detailpill.dart';
 import 'package:alpha/view/webview.dart';
 import 'package:flutter/material.dart';
