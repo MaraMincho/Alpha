@@ -1,3 +1,4 @@
+
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -5,24 +6,24 @@ dotenv.config();
 module.exports = 
 {
   "development": {
-    "username": "pill",
-    "password": "process.env.MYSQL_PWD",
+    "username": "root",
+    "password": "Dlwpdbs1!",
     "database": "pill",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
-    "username": "pill",
-    "password": "process.env.MYSQL_PWD",
+    "username": "root",
+    "password": "Dlwpdbs1!",
     "database": "pill",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
-    "username": "pill",
-    "password": "process.env.MYSQL_PWD",
+    "username": "root",
+    "password": "Dlwpdbs1!",
     "database": "pill",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }

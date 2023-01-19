@@ -1,10 +1,10 @@
-const express = require('express');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
+const express = require('express')
+const passport = require('passport')
+const jwt = require('jsonwebtoken')
 const { jwtkey } = require('../keys')
-const bcrypt = require('bcrypt');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const USERS = require('../models').USERS;
+const bcrypt = require('bcrypt')
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares')
+const USERS = require('../models').USERS
 
 
 const router = express.Router();

@@ -1,14 +1,12 @@
-const express = require('express');
+const express = require('express')
+const router = express.Router()
 
-const router = express.Router();
+router.get('/', (req, res) => {
+  res.status(201).json(
+    {
+      success: true
+    }
+  )
+})
 
-router.get('/', (req, res) =>{
-    res.status(201).json(
-        {
-            "success" : true
-        }
-    );
-});
-
-module.exports = router;
-
+module.exports = router
