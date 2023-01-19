@@ -2,7 +2,7 @@ const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const {jwtkey} = require('../keys')
-const User = require('../models').User;
+const USERS = require('../models').USERS;
 
 
 // 토큰 암호화
@@ -18,7 +18,7 @@ const jwtStrategyOption = {
         
         try {
          
-            const user = await User.findOne({ 
+            const user = await USERS.findOne({ 
               where: { id: jwt_payload.userId },  raw: true 
             });
 
