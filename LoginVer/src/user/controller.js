@@ -1,6 +1,7 @@
 // routes/user.js
 const express = require('express');
 const {register, temp} = require('./query');
+const {pool} = require("../database/db_config");
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -16,7 +17,13 @@ router.get('/', async (req, res) => {
 router.post('/register', async(req, res) => {
 
     let {name, nick, password} = req.body
-    await register(name, nick, password)
+    //await register(name, nick, password)
+
+    const query = `INSERT INTO users
+  (name, nick, password)
+  VALUES (?, ?, ?)`;
+    let temp = await pool(query, [name, nick, password]);
+
 
     res.status(201).json({
         "횐갑?" :" 성공~"

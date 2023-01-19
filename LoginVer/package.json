@@ -6,10 +6,29 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.0.1",
+    "nodemon": "^2.0.20",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "sequelize": "^6.28.0",
     "sequelize-auto": "^0.8.8"
-  }
+  },
+  "name": "loginver",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {
+    "eslint": "^8.32.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1"
+  },
+  "scripts": {
+    "start": "node ./app.js",
+    "dev": "nodemon --watch \"./src/**/*.js\" --exec \"npm start\""
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
