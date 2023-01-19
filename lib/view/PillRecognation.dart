@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PillRecognation extends StatefulWidget {
@@ -147,8 +148,7 @@ class _PillRecognationState extends State<PillRecognation> {
                     )
                 ),
                 SizedBox(height: 30,),
-              ],
-
+              ].animate().fadeIn(delay: 300.ms, duration: 500.ms),
               )
           ),
         ],

@@ -54,11 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   BatchPills(),
                 ],
               ),
-            ),
+            ).animate()
+                .fadeIn(delay: 300.ms, duration: 500.ms),
           ])
           ),
         ],
-      ),
+      )
     );
   }
 }
