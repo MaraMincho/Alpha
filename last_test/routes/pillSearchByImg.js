@@ -8,7 +8,7 @@ const PILLS = require('../models').PILLS;
 const BOOKMARKS = require('../models').BOOKMARKS;
 const { promises: fs } = require("fs");
 const Op = Sequelize.Op;
-
+    
 const router = express.Router();
 
 var storage = multer.diskStorage({       

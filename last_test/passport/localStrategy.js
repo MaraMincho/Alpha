@@ -10,7 +10,7 @@ module.exports = () => {
         usernameField: 'email', 
         passwordField: 'password'
     }, async (email, password, done) => { 
-        try {
+        try {   
             const user = await USERS.findOne({ // 로그인 시도에서 이메일 있는 조건으로 검색
                 where: { email }
             });

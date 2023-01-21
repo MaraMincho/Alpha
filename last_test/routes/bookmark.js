@@ -6,7 +6,7 @@ const BOOKMARKS = require('../models').BOOKMARKS;
 const { promises: fs } = require("fs");
 
 const router = express.Router();
-
+  
 router.post('/', passport.authenticate('local'),    // 회원 인증이 됐다면
   async (req, res, next) => {
     const { pillId, bookMarking } = req.body;

@@ -9,3 +9,4 @@ const auto = new SequelizeAuto("pill", "pill", "pill9898", {
 auto.run((err)=>{
    if(err) throw err;
 })
+   

@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('PILLS', {
-    id: {
+    id: {   
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-    },
+    },  
     class: {
       type: DataTypes.STRING(200),
       allowNull: false,

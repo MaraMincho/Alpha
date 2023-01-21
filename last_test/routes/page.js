@@ -5,7 +5,7 @@ const passport = require('passport');
 
 const router = express.Router();
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-
+    
 // 회원가입 
 router.post('/signup', isNotLoggedIn, async (req, res, next) => { 
     try {
