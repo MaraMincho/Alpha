@@ -17,8 +17,10 @@ const baseRouter = require('./routes/base');                // base 라우터
 const pageRouter = require('./routes/page');                // 회원가입, 로그인 라우터
 const userRouter = require('./routes/user');                // 로그인 상태 유지 라우터
 const pillSearchByImgRouter = require('./routes/pillSearchByImg');    // 이미지로 알약 검색 라우터
+const pillSearchByUserRouter = require('./routes/pillSearchByUser') // 직접 검색 라우터
 const bookmarkRouter = require('./routes/bookmark');        // 즐겨찾기 라우터
 const detailinfoRouter = require('./routes/detailinfo');    // 알약 상세 정보 라우터
+
 
 dotenv.config();
 
@@ -52,9 +54,9 @@ app.use(cors({
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(session({
-    resave: false, 
+    resave: false,  //session 변경 되지 않아도 저장
     saveUninitialized: false, 
-    secret: process.env.COOKIE_SECRET,
+    secret: process.env.COOKIE_SECRET, //sessionID 암호화 시 사용되는 값
     cookie: {
         httpOnly: false,
     },
@@ -70,6 +72,7 @@ app.use('/',baseRouter);
 app.use('/page', pageRouter); 
 app.use('/user', userRouter); 
 app.use('/pillSearchByImg',pillSearchByImgRouter);
+app.use('/pillSearchByUser',pillSearchByUserRouter);
 app.use('/bookmark',bookmarkRouter);
 app.use('/detailinfo',detailinfoRouter);
 

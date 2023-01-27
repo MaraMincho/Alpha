@@ -3,8 +3,8 @@ const convert = require('xml-js');
 const express = require('express');
 const passport = require('passport');
 const Sequelize = require('sequelize');
-const PILLS = require('../models').PILLS;
-const BOOKMARKS = require('../models').BOOKMARKS;
+const pills = require('../models').pills;
+const bookmarks = require('../models').bookmarks;
 const { promises: fs } = require("fs");
 const spawn = require('child_process').spawn;
 const request = require('request');
@@ -20,11 +20,11 @@ const url = 'http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDru
 router.post('/notlogin',  async (req, res) => {         
 
     // pillID 값 받아오기
-    const { pillId } = req.body;    
+    const { pillId } = req.query;    
 
     try {
         // DB에서 pillId 데이터 select
-        const pillInfo = await PILLS.findOne({ where: { id: pillId }, raw: true });     
+        const pillInfo = await pills.findOne({ where: { id: pillId }, raw: true });     
         // 해당 고유번호를 가진 알약의 사진을 가져오기
         pillInfo.image = await fs.readFile(__dirname + '/images' + '/' + pillId + '.jpg',            
             (err, data) => {
@@ -50,19 +50,19 @@ router.post('/notlogin',  async (req, res) => {
 router.post('/', passport.authenticate('local'), async (req, res) => {      
 
     // pillID 값 받아오기
-    const { pillId } = req.body;
+    const { pillId } = req.query;  
     
     try {
-        // BOOKMARKS 테이블에서 user_id 검색
-        const BOOKMARKS =  await BOOKMARKS.findAll({where : {  user_id:req.user.id  }, raw: true} );
+        // bookmarks 테이블에서 user_id 검색
+        const bookmark =  await bookmarks.findAll({where : {  user_id:req.user.id  }, raw: true} );
         // plist 초기화
         const plist = []
         // plist에 pill_id 추가
-        for(let i = 0;i<Object.keys(BOOKMARKS).length;i++){
-            plist.push(BOOKMARKS[i].pill_id);
+        for(let i = 0;i<Object.keys(bookmark).length;i++){
+            plist.push(bookmark[i].pill_id);
         }
-        // PILLS 테이블에서 pillid 검색
-        const pillInfo = await PILLS.findOne({ where: { id: pillId }, raw: true });
+        // pills 테이블에서 pillid 검색
+        const pillInfo = await pills.findOne({ where: { id: pillId }, raw: true });
         //알약 사진 반환
         pillInfo.image = await fs.readFile(__dirname + '/images' + '/' + pillId + '.jpg',             
             (err, data) => {
@@ -85,7 +85,7 @@ router.post('/', passport.authenticate('local'), async (req, res) => {
 // 알약 상세정보 html 코드
 router.post('/fromapi', async (req, res) => {
     // pillID 값 받아오기
-    const { pillId } = req.body;
+    const { pillId } = req.query;  
 
     // API 서비스 키 입력
     let queryParams = '?' + encodeURIComponent('ServiceKey') + '='+process.env.API_KEY;

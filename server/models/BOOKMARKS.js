@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('BOOKMARKS', {
+  return sequelize.define('bookmarks', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'USERS',
+        model: 'users',
         key: 'id'
       }
     },
@@ -19,13 +19,13 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'PILLS',
+        model: 'pills',
         key: 'id'
       }
     }
   }, {
     sequelize,
-    tableName: 'BOOKMARKS',
+    tableName: 'bookmarks',
     timestamps: false,
     indexes: [
       {
@@ -37,14 +37,14 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "BOOKMARKS_user_id_USERS_id",
+        name: "user_id_idx",
         using: "BTREE",
         fields: [
           { name: "user_id" },
         ]
       },
       {
-        name: "BOOKMARKS_pill_id_PILLS_id",
+        name: "pill_id_idx",
         using: "BTREE",
         fields: [
           { name: "pill_id" },

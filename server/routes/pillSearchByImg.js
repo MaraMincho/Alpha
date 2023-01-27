@@ -4,8 +4,8 @@ const spawn = require('child_process').spawn;  // javascript에서 다른 언어
 const path = require('path');   // 운영체제별로 경로 구분자가 달라서 발생하는 문제를 해결하기 위해 사용
 const Sequelize = require('sequelize');
 const passport = require('passport');
-const PILLS = require('../models').PILLS;
-const BOOKMARKS = require('../models').BOOKMARKS;
+const pills = require('../models').pills;
+const bookmarks = require('../models').bookmarks;
 const { promises: fs } = require("fs");
 const Op = Sequelize.Op;
 
@@ -41,8 +41,8 @@ router.post("/notlogin", (req, res) => {
 
       try {
         for (let i = 0; i < Arr.length - 1; i++) {
-          // PILLS 테이블에 있는 알약 id 검색
-          final[i] = await PILLS.findOne({ where: { id: Arr[i] }, raw: true });
+          // pills 테이블에 있는 알약 id 검색
+          final[i] = await pills.findOne({ where: { id: Arr[i] }, raw: true });
           // images 폴더에 있는 알약 사진 하나씩 읽기
           final[i].image = await fs.readFile(__dirname + '/images' + '/' + Arr[i] + '.jpg',              
             (err, data) => {
@@ -92,19 +92,19 @@ router.post("/",  passport.authenticate('local'),(req, res) => {
       const final = [];
 
       try {
-        // BOOKMARKS 테이블에서 user_id 모두 탐색
-        const bookmarks = await BOOKMARKS.findAll({ where: { user_id: req.user.id }, raw: true });
+        // bookmarks 테이블에서 user_id 탐색
+        const bookmark = await bookmarks.findAll({ where: { user_id: req.user.id }, raw: true });
         // flist 참조변수 선언
         const flist = []
 
-        // BOOKMARKS 테이블에서 user_id을 탐색한 길이 값 측정
-        for (let i = 0; i < Object.keys(bookmarks).length; i++) {
-          flist.push(bookmarks[i].pill_id);
+        // bookmarks 테이블에서 user_id을 탐색한 후 push
+        for (let i = 0; i < Object.keys(bookmark).length; i++) {
+          flist.push(bookmark[i].pill_id);
         }
 
         for (let i = 0; i < Arr.length - 1; i++) {
-          // PILLS 테이블에 있는 알약 id 검색
-          final[i] = await PILLS.findOne({ where: { id: Arr[i] }, raw: true });
+          // pills 테이블에 있는 알약 id 검색
+          final[i] = await pills.findOne({ where: { id: Arr[i] }, raw: true });
           // images 폴더에 있는 알약 사진 하나씩 읽기
           final[i].image = await fs.readFile(__dirname + '/images' + '/' + Arr[i] + '.jpg',          
             (err, data) => {

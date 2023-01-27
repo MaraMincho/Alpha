@@ -1,7 +1,7 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local');
-const USERS = require('../models').USERS;
+const users = require('../models').users;
 
 // local 로그인 전략
 // done : 첫번째인자 - 서버 에러 / 두번째인자 - 응답 실패,성공 유무 / 세번째인자 - 실패 시 나타낼 문구(reason: XXXX);
@@ -11,7 +11,7 @@ module.exports = () => {
         passwordField: 'password'
     }, async (email, password, done) => { 
         try {
-            const user = await USERS.findOne({ // 로그인 시도에서 이메일 있는 조건으로 검색
+            const user = await users.findOne({ // 로그인 시도에서 이메일 있는 조건으로 검색
                 where: { email }
             });
             if (!user) {

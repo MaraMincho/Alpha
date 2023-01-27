@@ -6,21 +6,21 @@ module.exports =
 {
   "development": {
     "username": "pill",
-    "password": "process.env.MYSQL_PWD",
+    "password": "pill9898",
     "database": "pill",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "pill",
-    "password": "process.env.MYSQL_PWD",
+    "password": "pill9898",
     "database": "pill",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "pill",
-    "password": "process.env.MYSQL_PWD",
+    "password": "pill9898",
     "database": "pill",
     "host": "127.0.0.1",
     "dialect": "mysql"

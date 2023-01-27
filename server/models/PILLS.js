@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('PILLS', {
+  return sequelize.define('pills', {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -10,16 +10,24 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    shape: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
     company: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
     name: {
       type: DataTypes.STRING(200),
+      allowNull: true
+    },
+    text: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
+    color: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
+    form: {
+      type: DataTypes.STRING(100),
       allowNull: true
     }
   }, {

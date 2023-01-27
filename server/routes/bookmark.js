@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const USERS = require('../models').USERS;
-const PILLS = require('../models').PILLS;
+const pills = require('../models').pills;
 const BOOKMARKS = require('../models').BOOKMARKS;
 const { promises: fs } = require("fs");
 
@@ -69,7 +69,7 @@ async (req, res, next)=> {
    
 
     for(let i = 0;i<Object.keys(bookmark).length;i++){
-        result[i] = await PILLS.findOne({
+        result[i] = await pills.findOne({
             where : {  id: bookmark[i].pill_id  }, raw: true
         } )
         result[i].image= await fs.readFile(__dirname + '/images'+'/'+bookmark[i].pill_id +'.jpg',             
