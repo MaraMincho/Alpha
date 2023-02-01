@@ -2,28 +2,28 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-module.exports = 
-{
-  "development": {
-    "username": "pill",
-    "password": "pill9898",
-    "database": "pill",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "test": {
-    "username": "pill",
-    "password": "pill9898",
-    "database": "pill",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "pill",
-    "password": "pill9898",
-    "database": "pill",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  }
-}
+module.exports =
+    {
+      "development": {
+        "username": process.env.USERNAME,
+        "password": process.env.PASSWORD,
+        "database": process.env.DATABASE,
+        "host": process.env.HOST,
+        "dialect": "mysql"
+      },
+      "test": {
+        "username": process.env.USERNAME,
+        "password": process.env.PASSWORD,
+        "database": process.env.DATABASE,
+        "host": process.env.HOST,
+        "dialect": "mysql"
+      },
+      "production": {
+        "username": process.env.USERNAME,
+        "password": process.env.PASSWORD,
+        "database": process.env.DATABASE,
+        "host": process.env.HOST,
+        "dialect": "mysql"
+      }
+    }
 

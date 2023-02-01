@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const spawn = require('child_process').spawn;  // javascript에서 다른 언어를 사용할 수 있게 해줌
+const spawn = require('node:child_process').spawn;  // javascript에서 다른 언어를 사용할 수 있게 해줌
 const path = require('path');   // 운영체제별로 경로 구분자가 달라서 발생하는 문제를 해결하기 위해 사용
 const Sequelize = require('sequelize');
 const passport = require('passport');
@@ -30,8 +30,8 @@ router.post("/notlogin", (req, res) => {
     // 객체를 JSON 문자열로 변환
     const obj = JSON.parse(JSON.stringify(req.files));
 
-    // javascript로 python 스크립트를 실행
-    const result = spawn('python', [path.join(__dirname, '..', 'AI', './pilldetectModel.py'),obj.img[0].path]);
+    // javascript로 python 스크립트를 실행(컴퓨터에 Python3 인지 Pyhon인지 잘 봐야 할 듯)
+    const result = spawn('python3', [path.join(__dirname, '..', 'AI', './pilldetectModel.py'),obj.img[0].path]);
 
     // stdout의 'data'이벤트리스너로 파이썬 파일 실행 결과를 받음
     result.stdout.on('data', async function (data) {

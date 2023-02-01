@@ -8,6 +8,7 @@ import keras
 import pickle
 import logging
 import imutils
+import pandas
 import argparse
 import numpy as np
 import pandas as pd
@@ -21,7 +22,7 @@ from keras.utils.image_utils import img_to_array
 
 os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "AI\seraphic-rarity-373904-e25d9c3b1870.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "AI/seraphic-rarity-373904-e25d9c3b1870.json"
 
 tf.autograph.set_verbosity(3)
 tf.get_logger().setLevel(logging.ERROR)
@@ -217,7 +218,7 @@ if __name__ == "__main__":
         elif len(pilllist) > 1:
 
             # 오픈소스를 활용하여 배경 제거 후 모양과 색깔 식별 진행  
-            os.system("python3 removebg.py -i input.jpeg -o output.png -m u2net -prep None -postp No")
+            os.system("python3 AI/removebg.py -i input.jpeg -o output.png -m u2net -prep None -postp No")
 
             colnshape = []
             colnshape = test('output.png')

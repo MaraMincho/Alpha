@@ -3,11 +3,12 @@ const path = require('path');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const express = require('express');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
+//const session = require('express-session');
+//const cookieParser = require('cookie-parser');
 
 const passport = require('passport');
-const passportConfig = require('./passport');
+//const passportConfig = require('./passport');
+const passportConfig = require('./passport/localStrategy');
 
 // 제작한 모델 불러오기
 const { sequelize } = require('./models/index');
@@ -15,12 +16,11 @@ const { sequelize } = require('./models/index');
 // 라우터 불러오기
 const baseRouter = require('./routes/base');                // base 라우터
 const pageRouter = require('./routes/page');                // 회원가입, 로그인 라우터
-const userRouter = require('./routes/user');                // 로그인 상태 유지 라우터
+//const userRouter = require('./routes/user');                // 로그인 상태 유지 라우터
 const pillSearchByImgRouter = require('./routes/pillSearchByImg');    // 이미지로 알약 검색 라우터
 const pillSearchByUserRouter = require('./routes/pillSearchByUser') // 직접 검색 라우터
 const bookmarkRouter = require('./routes/bookmark');        // 즐겨찾기 라우터
 const detailinfoRouter = require('./routes/detailinfo');    // 알약 상세 정보 라우터
-
 
 dotenv.config();
 
@@ -34,7 +34,6 @@ sequelize.sync({ force: false })
     console.error(err);
 })
 
-passportConfig(); // passport 내부 js 모듈 실행
 app.set('port', process.env.PORT || 3000);
 
 app.use(morgan('dev'));
@@ -51,26 +50,27 @@ app.use(cors({
 }));
 
 
-app.use(cookieParser(process.env.COOKIE_SECRET));
+//app.use(cookieParser(process.env.COOKIE_SECRET));
+// app.use(session({
+//     resave: false,  //session 변경 되지 않아도 저장
+//     saveUninitialized: false,
+//     secret: "123", //sessionID 암호화 시 사용되는 값 env파일이기에 수정필요함
+//     cookie: {
+//         httpOnly: false,
+//     },
+//     name: "login",
+// }));
 
-app.use(session({
-    resave: false,  //session 변경 되지 않아도 저장
-    saveUninitialized: false, 
-    secret: process.env.COOKIE_SECRET, //sessionID 암호화 시 사용되는 값
-    cookie: {
-        httpOnly: false,
-    },
-    name: "login",
-}));
 
-
+//app.use(passport.session());
 app.use(passport.initialize());
-app.use(passport.session());
+passportConfig(); // passport 내부 js 모듈 실행
+
 
 
 app.use('/',baseRouter);
 app.use('/page', pageRouter); 
-app.use('/user', userRouter); 
+//app.use('/user', userRouter);
 app.use('/pillSearchByImg',pillSearchByImgRouter);
 app.use('/pillSearchByUser',pillSearchByUserRouter);
 app.use('/bookmark',bookmarkRouter);
