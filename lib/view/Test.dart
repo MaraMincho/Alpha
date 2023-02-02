@@ -1,4 +1,8 @@
+import 'package:alpha/viewModel/searchPill.dart';
+import 'package:alpha/viewModel/sqlhelper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
 
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
@@ -8,6 +12,8 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
+
+  var testViewModel = Get.put(SearchPillViewModel());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,9 +22,25 @@ class _TestState extends State<Test> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Temp(),
-              Temp(),
-              Temp(),
+              ElevatedButton(
+                  onPressed: () async{
+                    await testViewModel.getHome();
+                  },
+                  child: Text("GetHome")),
+              ElevatedButton(
+                  onPressed: () async{
+                    await testViewModel.getPill();
+                  },
+                  child: Text("GetPill")),
+              ElevatedButton(
+                  onPressed: () async{
+                    await DatabaseHelper.instance.insert();
+                    var temp = await DatabaseHelper.instance.GetSomething();
+                    print(temp);
+
+                  },
+                  child: Text("GetDB")),
+              //Image.memory(Uint8List.fromList(testViewModel.currentPill.image!.data!)),
             ],
           )
         ),

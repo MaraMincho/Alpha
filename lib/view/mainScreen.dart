@@ -13,7 +13,7 @@ class _MainScreenState extends State<MainScreen> {
   static const List<Widget> _screen = [
     HomeScreen(), PillRecognation(), Test()
   ];
-  static int _currentScreenIndex = 0;
+  static int _currentScreenIndex = 2;
 
 
   void _onItemTapped(int index) {
