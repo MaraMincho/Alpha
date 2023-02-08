@@ -1,16 +1,20 @@
 class Pill {
+
+
+  static final Pill instance = Pill(
+    image: Image(data: [0], type: "buffer")
+  );
   int? id;
   String? pillClass;
-  String? shape;
+  String? form;
   String? company;
   String? name;
   Image? image;
   bool? bookMarking;
-
   Pill(
       {this.id,
         this.pillClass,
-        this.shape,
+        this.form,
         this.company,
         this.name,
         this.image,
@@ -19,7 +23,7 @@ class Pill {
   Pill.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     pillClass = json['class'];
-    shape = json['shape'];
+    form = json['form'];
     company = json['company'];
     name = json['name'];
     image = json['image'] != null ? new Image.fromJson(json['image']) : null;
@@ -30,7 +34,7 @@ class Pill {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['pillClass'] = this.pillClass;
-    data['shape'] = this.shape;
+    data['form'] = this.form;
     data['company'] = this.company;
     data['name'] = this.name;
     if (this.image != null) {

@@ -24,7 +24,6 @@ class APIrepo extends GetConnect {
   Future<Response> getDetailinforepo() async {
     Response response = await get(
       "/detailinfo/notlogin/?id=202000291"
-
     );
     return response;
   }

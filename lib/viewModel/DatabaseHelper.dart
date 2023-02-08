@@ -1,3 +1,4 @@
+import 'package:alpha/model/pill.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:async';
@@ -15,12 +16,9 @@ class DatabaseHelper {
   // only have a single app-wide reference to the database
   static Database? _database;
   Future<Database> get database async {
-    print(1);
     if (_database != null) return _database!; //싱글톤 패턴을 통해 DB가 실행되었으면, 아래 작업 실행 ㅌ
     // lazily instantiate the db the first time it is accessed
-    print(2);
     _database = await _initDatabase();
-    print(3);
     return _database!;
   }
 
@@ -34,22 +32,27 @@ class DatabaseHelper {
         onCreate: (db,  version) => _onCreate(db, 1)
     );
   }
+  Future<void> deleteDatabase() async{
+    String documentsDirectory = await getDatabasesPath();
+    String path = join(documentsDirectory, _databaseName);
+    databaseFactory.deleteDatabase(path);
+  }
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
-    print("DB생성 했음...");
-    await db.execute('''      
-      CREATE TABLE IF NOT EXISTS $table(
-          ind INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-          id INT NOT NULL,
+    await db.execute(
+        '''CREATE TABLE IF NOT EXISTS $table(
+          ind INTEGER PRIMARY KEY autoincrement,
+          id intger NOT NULL,
           pillClass text,
-          shape text,
+          form text,
           company text,
           name text,
           image text,
           bookMarking text
-      )
-          ''');
+      )'''
+          );
+    print("DB생성 했음...");
   }
 
   // Helper methods
@@ -57,31 +60,67 @@ class DatabaseHelper {
   // and the value is the column value. The return value is the id of the
   // inserted row.
 
-  Future insert() async {
-    // Get a reference to the database.
-    final Database db = await database;
-    try {
-      await db.insert(
-        table,
-        {
-          "text" : "help text",
-          "comment" : "help comment"
-        },
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
+  //https://iosroid.tistory.com/44
 
-      print('Db Inserted');
+  Future dropTable() async {
+    final Database db = await database;
+
+    try {
+      var result = await db.execute("Drop table if exists $table");
+      return result;
     }
-    catch(e){
-      print('DbException'+e.toString());
+    catch (err){
+      return err;
     }
   }
+  Future insert(Pill pill) async {
+    // Get a reference to the database.
+    final Database db = await database;
+
+    try {
+      var temp = await db.rawInsert(
+        '''
+        INSERT INTO $table(id, pillClass, form, company, name, image, bookMarking)
+        VALUES(?, ?, ?, ?, ?, ?, ?);
+        ''',
+        [pill.id, pill.pillClass, pill.form, pill.company, pill.name, pill.image?.data, "true"]
+      );
+      return temp;
+    } catch (err) {
+      print(err);
+      return err;
+    }
+  }
+  //   try {
+  //     await db.insert(
+  //       table,
+  //       {
+  //         "text" : "help text",
+  //         "comment" : "help comment"
+  //       },
+  //       conflictAlgorithm: ConflictAlgorithm.replace,
+  //     );
+  //     print('Db Inserted');
+  //   }
+  //   catch(e){
+  //     print('DbException'+e.toString());
+  //   }
+  // }
 
   // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     Database db = await instance.database;
     return await db.query(table);
+  }
+
+
+  Future showPillTables() async {
+    Database db = await instance.database;
+    var userPillList = await db.rawQuery(
+      '''SELECT * FROM $table'''
+    );
+    return userPillList;
   }
 
 
@@ -92,7 +131,6 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [2],
     ));
-
     return maps;
 
   }

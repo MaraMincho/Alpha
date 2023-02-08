@@ -1,6 +1,12 @@
 
+import 'dart:typed_data';
+
+import 'package:alpha/view/ImageCropScreen.dart';
+import 'package:alpha/viewModel/CropViewModel.dart';
+import 'package:alpha/viewModel/searchPillViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PillRecognation extends StatefulWidget {
@@ -11,6 +17,8 @@ class PillRecognation extends StatefulWidget {
 }
 
 class _PillRecognationState extends State<PillRecognation> {
+  var cropViewModel = Get.put(CropViewModel());
+  var searchViewModel = Get.put(SearchPillViewModel());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -75,8 +83,26 @@ class _PillRecognationState extends State<PillRecognation> {
                     goodImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/idealNoZoom.png',
                     badImageUrl: 'images/imgs/AIRecognationIdealPhotoGuide/BadNoZoom.png'),
 
-
-
+                SizedBox(height: 10,),
+                Container(width: MediaQuery.of(context).size.width * 0.8, height: 3, color: Colors.black12,),
+                SizedBox(height: 20,),
+                Text("전달한 사진 선택하기",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    letterSpacing: -1,
+                    fontWeight: FontWeight.w700
+                  ),
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CropPillFromGalleryContainer(titleText: "앞면", image: searchViewModel.firstCroppedImage),
+                    CropPillFromGalleryContainer(titleText: "앞면", image: searchViewModel.secondCroppedImage),
+                  ],
+                ),
+                SizedBox(height: 10,),
                 Container(
                   padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                   child: ElevatedButton(
@@ -92,7 +118,8 @@ class _PillRecognationState extends State<PillRecognation> {
                     ),
                     onPressed: ()async{
                       final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-                      print(image?.path);
+                      cropViewModel.currentSelectedImage = await image?.readAsBytes();
+                      Get.to(ImageCropScreen());
                     },
                     child: Row(
                       children: [
@@ -156,6 +183,44 @@ class _PillRecognationState extends State<PillRecognation> {
     );
   }
 }
+
+
+class CropPillFromGalleryContainer extends StatelessWidget {
+  CropPillFromGalleryContainer({Key? key, required this.titleText, required this.image}) : super(key: key);
+  final cropViewModel = Get.put(CropViewModel());
+  final searchViewModel = Get.put(SearchPillViewModel());
+  final String titleText;
+  final List<int>? image;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text("앞면", style: TextStyle(fontSize: 20),),
+        SizedBox(height: 5,),
+        InkWell(
+          onTap: () async{
+            final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+            cropViewModel.currentSelectedImage = await image?.readAsBytes();
+            Get.to(ImageCropScreen());
+          },
+          child: Container(
+            width:150,
+            height: 150,
+            child: image == null ?
+            Icon(Icons.add, color: Colors.black.withOpacity(0.5), size: 45) :
+            Image.memory(Uint8List.fromList(image!)),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(width: 1, color: Colors.black26)
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
 
 class GoodAndBadImageDescription extends StatelessWidget {
   final String goodImageUrl;
