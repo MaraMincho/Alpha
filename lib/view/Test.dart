@@ -1,6 +1,6 @@
 
 import 'package:alpha/view/test6_croopScreen.dart';
-import 'package:alpha/view/test2_imageTest.dart';
+import 'package:alpha/view/testDir/test2_imageTest.dart';
 import 'package:alpha/view/ImageCropScreen.dart';
 import 'package:alpha/viewModel/TestController.dart';
 import 'package:alpha/viewModel/searchPillViewModel.dart';
@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../model/pill.dart';
-import 'test4.dart';
+import 'testDir/test4.dart';
 
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
