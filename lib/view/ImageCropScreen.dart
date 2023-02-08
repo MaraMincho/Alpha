@@ -1,3 +1,4 @@
+import 'package:alpha/view/CropPillFromGalleryContainer.dart';
 import 'package:alpha/view/mainScreen.dart';
 import 'package:alpha/viewModel/CropViewModel.dart';
 import 'package:alpha/viewModel/searchPillViewModel.dart';
@@ -38,13 +39,57 @@ class _ImageCropScreenState extends State<ImageCropScreen> {
                       //왼쪽부터 알약 채워넣기
                       if (searchPillViewModel.firstCroppedImage == null) {
                         searchPillViewModel.firstCroppedImage = _croppedData;
+                        Get.delete<CropViewModel>();
+                        Get.off(MainScreen());
                       }
                       else{
                         searchPillViewModel.secondCroppedImage = _croppedData;
-                      }
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("확인해주세요!"),
+                               content: Column(
+                                 mainAxisSize: MainAxisSize.min,
+                                 children: [
+                                   FittedBox(
+                                     fit: BoxFit.scaleDown,
+                                     child: Row(
+                                       children: [
+                                         CropPillFromGalleryContainer(titleText: "앞면", image: searchPillViewModel.firstCroppedImage),
+                                         SizedBox(width: 10,),
+                                         CropPillFromGalleryContainer(titleText: "뒷면", image: searchPillViewModel.secondCroppedImage),
+                                       ],
+                                     ),
+                                   ),
+                                   SizedBox(height: 20,),
+                                   Text("앞면과 뒷면 사진이 맞습니까?"),
 
-                      Get.delete<CropViewModel>();
-                      Get.off(MainScreen());
+                                 ],
+                               ),
+                                actions: [
+                                  TextButton(
+                                    child: Text('다시고르기',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                    onPressed: () {
+                                      Get.delete<CropViewModel>();
+                                      Get.off(MainScreen());
+                                      },
+                                  ),
+                                  TextButton(
+                                    child: Text('네 맞습니다!',
+                                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+                                    ),
+                                    onPressed: () async{
+                                      var temp = await searchPillViewModel.getPillInfoUsingImgFromServer();
+                                      Get.to(MainScreen());
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                      }
                     });
                   }
               ),
@@ -90,3 +135,4 @@ class _ImageCropScreenState extends State<ImageCropScreen> {
     );
   }
 }
+

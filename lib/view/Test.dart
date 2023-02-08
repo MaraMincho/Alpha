@@ -1,5 +1,4 @@
 
-import 'package:alpha/view/test6_croopScreen.dart';
 import 'package:alpha/view/testDir/test2_imageTest.dart';
 import 'package:alpha/view/ImageCropScreen.dart';
 import 'package:alpha/viewModel/TestController.dart';
@@ -88,7 +87,7 @@ class _TestState extends State<Test> {
                   onPressed: () async{
                     final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
                     testController.temp = await image?.readAsBytes();
-                    Get.to(CropScreen());
+                    Get.to(ImageCropScreen());
                   },
                   child: Text("Image Picker")),
               //Image.memory(Uint8List.fromList(testViewModel.currentPill.image!.data!)),
