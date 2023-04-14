@@ -58,14 +58,21 @@ router.post("/notlogin", (req, res) => {
           // 비회원이므로 즐겨찾기 여부 반환 불가
         final[i].bookMarking = false;
         }
-         // 비동기 방식으로 파일 삭제
-         fs.unlink(obj.img1[0].path);
-         fs.unlink(obj.img2[0].path);
+        // 비동기 방식으로 파일 삭제
+        fs.unlink(obj.img1[0].path);
+        fs.unlink(obj.img2[0].path);
+
+        // 검색 결과가 없을 경우 204 응답 보냄
+        if (final.length == 0) {
+          return res.status(204).send();
+        }
+
         // JSON 형식으로 결과 전송
         res.json(final);
       } 
       catch (error){
         console.error(error);
+        return next(error);
       }
     });
     // 에러 발생 시, stderr의 'data'이벤트리스너로 실행 결과를 받음

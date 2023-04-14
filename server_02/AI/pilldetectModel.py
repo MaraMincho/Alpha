@@ -22,7 +22,7 @@ from keras.utils.image_utils import img_to_array
 
 os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'AI\seraphic-rarity-373904-e25d9c3b1870.json'
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'AI/utility-vista-383610-9fee0103db04.json'
 
 tf.autograph.set_verbosity(3)
 tf.get_logger().setLevel(logging.ERROR)
