@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileViewer extends StatelessWidget {
   const ProfileViewer({Key? key}) : super(key: key);
@@ -25,13 +26,18 @@ class ProfileViewer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        '안녕하세요',
-                        style: TextStyle(
-                            fontSize: LargeSizeFont,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -1,
-                            height: 1),
+                      InkWell(
+                        onTap: () {
+                          Get.snackbar("에러 메세지", "사진을 다시 찍어주세요!", snackPosition: SnackPosition.TOP);
+                        },
+                        child: Text(
+                          '안녕하세요',
+                          style: TextStyle(
+                              fontSize: LargeSizeFont,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: -1,
+                              height: 1),
+                        ),
                       ), //profile 소개 멘트
                       Text(
                         '정다함님',

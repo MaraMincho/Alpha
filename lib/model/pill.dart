@@ -1,6 +1,4 @@
 class Pill {
-
-
   static final Pill instance = Pill(
     image: Image(data: [0], type: "buffer")
   );
@@ -11,6 +9,7 @@ class Pill {
   String? name;
   Image? image;
   bool? bookMarking;
+
   Pill(
       {this.id,
         this.pillClass,

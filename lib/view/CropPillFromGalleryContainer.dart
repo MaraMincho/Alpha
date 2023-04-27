@@ -1,11 +1,9 @@
 import 'dart:typed_data';
-
 import 'package:alpha/viewModel/CropViewModel.dart';
 import 'package:alpha/viewModel/searchPillViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'ImageCropScreen.dart';
 
 class CropPillFromGalleryContainer extends StatelessWidget {
@@ -23,8 +21,10 @@ class CropPillFromGalleryContainer extends StatelessWidget {
         InkWell(
           onTap: () async{
             final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-            cropViewModel.currentSelectedImage = await image?.readAsBytes();
-            Get.to(ImageCropScreen());
+            if (image?.path != null) {
+              cropViewModel.currentSelectedImage = await image?.readAsBytes();
+              Get.to(ImageCropScreen());
+            }
           },
           child: Container(
             width:150,

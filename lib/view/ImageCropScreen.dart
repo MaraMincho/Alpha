@@ -73,6 +73,7 @@ class _ImageCropScreenState extends State<ImageCropScreen> {
                                       style: TextStyle(color: Colors.red),
                                     ),
                                     onPressed: () {
+                                      Get.delete<SearchPillViewModel>();
                                       Get.delete<CropViewModel>();
                                       Get.off(MainScreen());
                                       },
@@ -82,8 +83,8 @@ class _ImageCropScreenState extends State<ImageCropScreen> {
                                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
                                     ),
                                     onPressed: () async{
-                                      var temp = await searchPillViewModel.getPillInfoUsingImgFromServer();
-                                      Get.to(MainScreen());
+
+                                      await searchPillViewModel.getPillInfoUsingImgFromServer();
                                     },
                                   ),
                                 ],

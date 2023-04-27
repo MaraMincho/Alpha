@@ -24,6 +24,7 @@ class _TestState extends State<Test> {
   var testController = Get.put(TestController());
   @override
   Widget build(BuildContext context) {
+    bool ischecked = true;
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -37,7 +38,7 @@ class _TestState extends State<Test> {
                   child: Text("GetHome")),
               ElevatedButton(
                   onPressed: () async{
-                    testViewModel.getPill();
+                    testViewModel.getPill(202000291);
                   },
                   child: Text("GetPillFromServer")),
               ElevatedButton(
@@ -48,7 +49,7 @@ class _TestState extends State<Test> {
                   child: Text("ShowCurrentPill")),
               ElevatedButton(
                   onPressed: () async{
-                    var temp = await DatabaseHelper.instance.insert(testViewModel.currentPill);
+                    var temp = await DatabaseHelper.instance.insert(testViewModel.currentPill, testViewModel.currentDetailPill!);
                     print(temp.runtimeType);
                   },
                   child: Text("InsertPillToDB")),
@@ -90,7 +91,25 @@ class _TestState extends State<Test> {
                     Get.to(ImageCropScreen());
                   },
                   child: Text("Image Picker")),
+              ElevatedButton(
+                  onPressed: () async{
+                    await (testViewModel.getPillInfoUsingImgFromServer());
+                  },
+                  child: Text("다시보내기")),
+              ElevatedButton(
+                  onPressed: () async{
+                    print(testViewModel.tempResponse);
+                  },
+                  child: Text("리스폰스는?")),
+              ElevatedButton(
+                  onPressed: () async{
+                    print(testViewModel.currentDetailPill?.toJson());
+                  },
+                  child: Text("디테일 값은?")),
               //Image.memory(Uint8List.fromList(testViewModel.currentPill.image!.data!)),
+              Checkbox(value: ischecked, onChanged: (val)=> setState(() {
+                ischecked = val!;
+              }))
             ],
           )
         ),

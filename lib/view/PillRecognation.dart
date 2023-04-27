@@ -116,8 +116,10 @@ class _PillRecognationState extends State<PillRecognation> {
                     ),
                     onPressed: ()async{
                       final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-                      cropViewModel.currentSelectedImage = await image?.readAsBytes();
-                      Get.to(ImageCropScreen());
+                      if (image?.path != null) {
+                        cropViewModel.currentSelectedImage = await image?.readAsBytes();
+                        Get.to(ImageCropScreen());
+                      }
                     },
                     child: Row(
                       children: [
@@ -152,6 +154,10 @@ class _PillRecognationState extends State<PillRecognation> {
                       ),
                       onPressed: ()async{
                         final XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+                        cropViewModel.currentSelectedImage = await image?.readAsBytes();
+                        if (image?.path != null) {
+                          Get.to(ImageCropScreen());
+                        }
                         print(image?.path);
 
                       },

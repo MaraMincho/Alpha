@@ -31,19 +31,9 @@ class DetailBatchPill extends StatelessWidget {
               Expanded(
                   child: ListView(
                     children: [
+                      DetailPill(
 
-                      GestureDetector(
-                          child: DetailPill(),
-                        onTap: (){
-                            Get.to(WebViewScreen());
-                        },
                       ),
-                      GestureDetector(
-                          child: DetailPill(),
-                        onTap: (){Get.to(WebViewScreen());}
-                      ),
-                      DetailPill(),
-                      DetailPill(),
                     ],
                   )
               )

@@ -14,7 +14,7 @@ class DetailPill extends StatelessWidget {
             side: BorderSide(
               color: Colors.black12,
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           child: Container(
             padding: EdgeInsets.all(10),
@@ -23,16 +23,16 @@ class DetailPill extends StatelessWidget {
                 Expanded(
                   flex: 3,
                     child: Container(
-                      padding: EdgeInsets.all(3),
+                      padding: EdgeInsets.all(1),
                       decoration: BoxDecoration(
                         color: Colors.black,
-                        borderRadius: BorderRadius.circular(20)
+                        borderRadius: BorderRadius.circular(10)
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20), // Image border
+                        borderRadius: BorderRadius.circular(10), // Image border
                         child: SizedBox.fromSize(
                           size: Size.fromRadius(48), // Image radius
-                          child: Image.asset('images/icons/BadNoText.png', fit: BoxFit.cover,),
+                          child: Image.asset('images/imgs/tylenol.png', fit: BoxFit.cover,),
                         ),
                       ),
                     )
@@ -46,7 +46,7 @@ class DetailPill extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FittedBox(
-                          child: Text('신일이부프로펜정400밀리그램',
+                          child: Text('타이레놀',
                             style: TextStyle(
                               fontSize: 20,
                               letterSpacing: -1,

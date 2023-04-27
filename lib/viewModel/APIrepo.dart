@@ -41,11 +41,18 @@ class APIrepo extends GetConnect {
     );
     return response;
   }
-  Future<Response> getDetailinforepo() async {
+  Future<Response> getDetailinforepo(int id) async {
     Response response = await get(
-      "/detailinfo/notlogin/?id=202000291"
+      "/detailinfo/notlogin/?id=$id"
     );
     return response;
   }
 
+
+  Future<Response> getDetailinfoFromAPIrepo(int id) async {
+    Response response = await get(
+        "/detailinfo/fromapi/?id=$id"
+    );
+    return response;
+  }
 }
