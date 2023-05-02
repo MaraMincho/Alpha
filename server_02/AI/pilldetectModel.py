@@ -50,7 +50,7 @@ def txtdetect(img_dir):
     return findtxt
 
 
-def test(img_dir):
+def vgg(img_dir):
     image = cv2.imread(img_dir)
     output = imutils.resize(image, width=400)
 
@@ -97,13 +97,6 @@ def rename():
     new_image.save("input.jpeg", "JPEG")
 
 
-def get_jaccard_sim(str1, str2):
-    # 음각 유사도 jaccard 유사도 진행
-    a = set(str1)
-    b = set(str2)
-    c = a.intersection(b)
-    return float(len(c)) / (len(a) + len(b) - len(c))
-
 # 메인 함수 시작
 if __name__ == "__main__":
     
@@ -136,6 +129,7 @@ if __name__ == "__main__":
             findtxt[a] = findtxt[a].rstrip('\n')
             findtxt[a] = findtxt[a].replace('\n', ' ')
             findtxt[a] = findtxt[a].replace('\'', '')
+            findtxt[a] = findtxt[a].replace('(', '')
             findtxt[a] = findtxt[a].replace('.', '')
 
         # 글자에 공백이 있는 경우
@@ -143,7 +137,7 @@ if __name__ == "__main__":
             findtxt.append(findtxt[0].replace(' ', ''))
             check = 1
 
-        for index in range(24800):
+        for index in range(24850):
             # 추출된 글자를 모두 포함하고 있는 위치 인덱스와 일치하는 알약 pilllist 에 append
             if check == 0:
                 if (findtxt[0] == str(xlsx['표시앞'][index])) or (findtxt[0] == str(xlsx['표시뒤'][index])):
@@ -170,7 +164,7 @@ if __name__ == "__main__":
 
         # 글자가 100% 일치하지 않으면 추출된 모든 글자를 비교(글자 일치율이 높은 알약에 대해 우선적으로 append )
         if not pilllist:
-            for index in range(24800):
+            for index in range(24850):
                 for c in range(len(findtxt)):
                     if (findtxt[c] == str(xlsx['표시앞'][index])):
                         for d in range(len(findtxt)):
@@ -184,7 +178,7 @@ if __name__ == "__main__":
                                     pilllist.append(xlsx['품목일련번호'][index])
                                     indexlist.append(index)
 
-            for index in range(24800):
+            for index in range(24850):
                 for c in range(len(findtxt)):
                     if (findtxt[c] == str(xlsx['표시뒤'][index])):
                         for d in range(len(findtxt)):
@@ -198,7 +192,7 @@ if __name__ == "__main__":
                                     pilllist.append(xlsx['품목일련번호'][index])
                                     indexlist.append(index)
 
-            for index in range(24800):
+            for index in range(24850):
                 for c in range(len(findtxt)):
                     if (findtxt[c] == str(xlsx['표시앞'][index])) or (findtxt[c] == str(xlsx['표시뒤'][index])):
                         if xlsx['품목일련번호'][index] != 200806190 and xlsx['품목일련번호'][index] != 200806191 and \
@@ -236,28 +230,40 @@ if __name__ == "__main__":
             '''''''''''''''''''''
 
             colnshape = []
-            colnshape = test('output.png')
+            colnshape = vgg('output.png')
 
             shape = []
             color = []
             
             # 예측값에 대해서 색깔과 제형으로 분리
             for a in range(len(colnshape)):
-                # 이름에 '형'이 들어가면
+                # 라벨이 제형에 대한 값이면
                 if colnshape[a][-1] == chr(54805): 
                     # 제형
                     shape.append(colnshape[a])  
-                # 이름에 '형'이 들어가지 않으면
+                # 그렇지 않으면
                 else:             
                     # 색깔              
                     color.append(colnshape[a])  
-
-            for c in range(len(color)):
-                for s in range(len(shape)):
-                    for index in range(len(indexlist)):
-                        if (xlsx['의약품제형'][indexlist[index]] == shape[s] and xlsx['색상앞'][indexlist[index]] == color[c]):
-                            if xlsx['품목일련번호'][indexlist[index]] not in finalpilllist:
-                                finalpilllist.append(xlsx['품목일련번호'][indexlist[index]])
+            
+            # 엑셀에서 색상 및 모양을 검색 
+            for c in range(len(color)):      # 우선 색상에 대한 반복문을 실행 후
+              for s in range(len(shape)):    # 위 반복문 안에서 모양에 대한 반복문을 실행
+                 for index in range(len(indexlist)):
+                  if xlsx['색상앞'][indexlist[index]] == color[c]:
+                   if xlsx['의약품제형'][indexlist[index]] == shape[s]:
+                    # 색상과 모양이 모두 일치하는 경우 (1순위)
+                    if xlsx['품목일련번호'][indexlist[index]] not in finalpilllist:
+                        finalpilllist.append(xlsx['품목일련번호'][indexlist[index]])
+                    else:
+                     # 색상만 일치하는 경우 (2순위)
+                     if xlsx['품목일련번호'][indexlist[index]] not in finalpilllist:
+                        finalpilllist.append(xlsx['품목일련번호'][indexlist[index]])
+                     # 의약품제형만 일치하는 경우 (3순위)
+                        for s in range(len(shape)):
+                         for index in range(len(indexlist)):
+                          if xlsx['의약품제형'][indexlist[index]] == shape[s] and xlsx['품목일련번호'][indexlist[index]] not in finalpilllist:
+                              finalpilllist.append(xlsx['품목일련번호'][indexlist[index]])
 
     # 최종적으로 예측된 pilllist가 없을 때
     if not finalpilllist:
@@ -279,6 +285,3 @@ if __name__ == "__main__":
         for i in finalpilllist[:5]:
             temp = temp + str(i) + ','
         print(temp)
-
-
-
