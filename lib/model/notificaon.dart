@@ -67,7 +67,8 @@ class LocalNotification {
   tz.TZDateTime _nextInstanceOfTenAM() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
-    tz.TZDateTime(tz.local, now.year, now.month, now.day, 17, 19);
+    tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 03
+    );
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 3));
     }

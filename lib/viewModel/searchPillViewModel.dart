@@ -76,6 +76,9 @@ class SearchPillViewModel extends GetxController {
     }
     final res = await http.Response.fromStream(response);
     var body = res.body; //알고리즘을 통해 전달 받은 값
+    if (body == null) {
+      return;
+    }
     print("됌?");
     print(body);
     print(currentDetailPill);

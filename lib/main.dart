@@ -1,3 +1,4 @@
+import 'package:alpha/view/LoginPage.dart';
 import 'package:alpha/view/mainScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
         unselectedWidgetColor: Colors.red,
         fontFamily: 'Pretendard'
       ),
-      home: MainScreen()
+      home: MainScreen(),
+      //home: SignInPage2()
       // home: Scaffold(
       //   appBar: AppBar(),
       //   body: Center(

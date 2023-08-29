@@ -34,9 +34,7 @@ class _PillRecognationState extends State<PillRecognation> {
                 expandedTitleScale: 2,
                 title: Container(
                     height: MediaQuery.of(context).size.height * 0.1,
-                    child: Center(
-                      child: Text("알약을 찍어주세요!", style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: -1, color: Colors.black)),
-                    )
+                    child: Center(child: Text("알약을 찍어주세요!", style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: -1, color: Colors.black),))
                 )
             ),
             shadowColor: Colors.red.withOpacity(0),

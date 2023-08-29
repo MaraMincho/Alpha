@@ -48,6 +48,28 @@ class APIrepo extends GetConnect {
     return response;
   }
 
+  Future<Response> register(String nickname, String email, String password) async {
+    Response response = await post(
+      "/page/signup"
+    ,{
+      "nickname" :nickname,
+      "email" : email,
+      "password" : password
+    });
+    return response;
+  }
+
+  Future<Response> login(String email, String password) async {
+    Response response = await post(
+        "/page/login"
+        ,{
+      "email" : email,
+      "password" : password
+    });
+    return response;
+  }
+
+
 
   Future<Response> getDetailinfoFromAPIrepo(int id) async {
     Response response = await get(
